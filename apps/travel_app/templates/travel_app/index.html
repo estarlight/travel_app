@@ -140,7 +140,9 @@
 
 
 <script>
-    
+    $('#ajax_form').submit(function(e){
+        e.preventDefault();
+    })
     $('#search').keyup(function(){
         $.ajax({
             url: '/find_places',

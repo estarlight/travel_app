@@ -3,6 +3,8 @@
         <select multiple class="form-control" onchange="if (this.value) window.location.href=this.value">
         {% for p in places %}
           <option id="option" value="/results/{{ p.city}}/{{p.country}}">{{ p.city}}, {{p.country}}</option>
+          {% empty %}
+          <option>No matching results</option>
         {% endfor %}
         </select>
     </form>
