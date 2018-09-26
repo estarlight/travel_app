@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>View Trip</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <style>
+        .jumbotron p, .jumbotron h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    
+    <nav class="navbar navbar-light">
+
+        <a class="navbar-brand" href="/">Travel Itineraries</a>
+    
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link" href="/my_trips">My Trips</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/saved_itineraries">Saved Itineraries</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logoff</a>
+            </li>
+        </ul> 
+    </nav> 
+                         
+    <div class="jumbotron">
+    <div class="col-10 mx-auto">
+        <h1 class="display-4">View</h1>
+        <p class="lead">You are currently viewing: {{ trip.title }}</p>
+        <hr class="my-4">
+    </div>
+    </div>
+              
+
+    
+    <div class="card">
+
+            <!-- <img class="card-img-top" src=".../100px200/" alt="Card image cap"> -->
+        <div class="card-body">
+        <h5 class="card-title">{{ trip.title }}</h5>
+        <p class="card-text">{{ trip.description }}</p>
+        <p class="card-text"><small class="text-muted">{{ trip.updated_at }}</small></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">City: {{trip.city}}</li>
+            <li class="list-group-item">Country: {{trip.country}}</li>
+            </ul>
+            <div class="card-body">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="btn-group">
+                <a href="/my_trips" class="card-link btn btn-outline-secondary">Back</a>
+                {% if trip.added_user.id != request.session.user_id %}
+                <a href="/save/{{trip.id}}" class="card-link btn btn-outline-secondary" id="save">Save</a>
+                {% endif %}
+                {% if trip.added_user.id == request.session.user_id %}
+                <a href="/edit_trip/{{trip.id}}" class="card-link btn btn-outline-secondary">Edit</a>
+                <a href="/delete/{{trip.id}}" class="card-link btn btn-outline-secondary">Delete</a>
+                {% endif %}
+                </div>
+            </div>
+            </div>
+    
+        </div>
+  
+    
+</body>
+</html>

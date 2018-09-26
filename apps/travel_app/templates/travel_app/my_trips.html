@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Trips</title>
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <style>
+        .jumbotron p, .jumbotron h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    
+    <nav class="navbar navbar-light">
+
+        <a class="navbar-brand" href="/">Travel Itineraries</a>
+    
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link" href="/my_trips">My Trips</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/saved_itineraries">Saved Itineraries</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul> 
+    </nav> 
+
+
+    
+    <div class="jumbotron">
+    <div class="col-10 mx-auto">
+        <h1 class="display-4">My Trips</h1>
+        <p class="lead">Here are all the itineraries you added yourself.</p>
+        <hr class="my-4">
+        <p class="lead"><a href="{% url 'index' %}#add">Add another trip</a></p>
+    </div>
+    </div>
+  
+        <div class="row">
+            {% for t in my_trips %}
+                <div class="col-4" style="margin:10px 0;">
+                    <div class="card" style="height:100%;">
+        
+                            <!-- <img class="card-img-top" src=".../100px200/" alt="Card image cap"> -->
+                        <div class="card-body">
+                        <h5 class="card-title">{{ t.title }}</h5>
+                        <p class="card-text" style="min-height: 100px;">{{ t.description|truncatechars:150 }}</p>
+                        <p class="card-text"><small class="text-muted">{{ t.updated_at }}</small></p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">City: {{t.city}}</li>
+                            <li class="list-group-item">Country: {{t.country}}</li>
+                            </ul>
+                            <div class="card-body">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="btn-group">
+                                <a href="/view/{{t.id}}" class="card-link btn btn-outline-secondary">View</a>
+                                <a href="/edit_trip/{{t.id}}" class="card-link btn btn-outline-secondary">Edit</a>
+                                <a href="/delete/{{t.id}}" class="card-link btn btn-outline-secondary">Delete</a>
+                                </div>
+                            </div>
+                            </div>
+                    
+                        </div>
+                </div>
+            {%endfor %}
+        </div>
+        <!-- <div class="card-deck">
+            
+         {% for t in my_trips %}
+        
+            <div class="card">
+           
+            <img class="card-img-top" src=".../100px200/" alt="Card image cap">
+            <div class="card-body">
+            <h5 class="card-title">{{ t.title }}</h5>
+            <p class="card-text">{{ t.description }}</p>
+            <p class="card-text"><small class="text-muted">{{ t.updated_at }}</small></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">City: {{t.city}}</li>
+                <li class="list-group-item">Country: {{t.country}}</li>
+                </ul>
+                <div class="card-body">
+                <a href="#" class="card-link">View</a>
+                <a href="/edit_trip/{{t.id}}" class="card-link">Edit</a>
+                <a href="#" class="card-link">Delete</a>
+                </div>
+       
+            </div>
+  
+        {% endfor %}
+        </div> -->
+       
+   
+        <!-- <div class="card">
+            <img class="card-img-top" src=".../100px200/" alt="Card image cap">
+            <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">City: {{city.name}}</li>
+                <li class="list-group-item">Country: {{country.name}}</li>
+                </ul>
+                <div class="card-body">
+                <a href="#" class="card-link">View</a>
+                <a href="#" class="card-link">Edit</a>
+                <a href="#" class="card-link">Delete</a>
+                </div>
+        </div>
+        <div class="card">
+            <img class="card-img-top" src=".../100px200/" alt="Card image cap">
+            <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">City: {{city.name}}</li>
+                <li class="list-group-item">Country: {{country.name}}</li>
+                </ul>
+                <div class="card-body">
+                <a href="#" class="card-link">View</a>
+                <a href="#" class="card-link">Edit</a>
+                <a href="#" class="card-link">Delete</a>
+                </div>
+        </div> -->
+       
+  
+
+
+
+    </div>
+</body>
+
+</html>

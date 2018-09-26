@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <style>
+            .jumbotron h1 {
+                text-align: center;
+            }
+        </style>
+</head>
+<body>
+    <div class="container">
+    
+    <nav class="navbar navbar-light">
+
+        <a class="navbar-brand" href="/">Travel Itineraries</a>
+    
+        <ul class="nav justify-content-end">
+            <li class="nav-item">
+                <a class="nav-link" href="/my_trips">My Trips</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/saved_itineraries">Saved Itineraries</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Logoff</a>
+            </li>
+        </ul> 
+    </nav> 
+
+
+    <div class="jumbotron">
+    <div class="col-10 mx-auto">
+        <h1 class="display-4">My Saved Itineraries</h1>
+        <p class="lead">Here are all the itineraries from other users that you've saved to help you inspire and plan your next trip!</p>
+        <hr class="my-4">
+    </div>
+    </div>
+
+    <div class="row">
+    {% for t in trips %}
+        <div class="col-4" style="margin:10px 0;">
+            <div class="card" style="height:100%;">
+        
+                <!-- <img class="card-img-top" src=".../100px200/" alt="Card image cap"> -->
+            <div class="card-body">
+            <h5 class="card-title">{{ t.title }}</h5>
+            <p class="card-text" style="min-height: 100px;">{{ t.description|truncatechars:150 }}</p>
+            <p class="card-text"><small class="text-muted">{{ t.added_user.first_name }} {{ t.added_user.last_name }} </small></p>
+            <p class="card-text"><small class="text-muted">{{ t.updated_at }}</small></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">City: {{t.city}}</li>
+                <li class="list-group-item">Country: {{t.country}}</li>
+                </ul>
+                <div class="card-body">
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="btn-group">
+                    <a href="/view/{{t.id}}" class="card-link btn btn-outline-secondary">View</a>
+                    <a href="/remove/{{t.id}}" class="card-link btn btn-outline-secondary">Remove</a>
+                    </div>
+                </div>
+                </div>
+        
+            </div>
+    </div>
+{%endfor %}
+        </div>
+   
+
+
+
+    </div>
+</body>
+
+</html>

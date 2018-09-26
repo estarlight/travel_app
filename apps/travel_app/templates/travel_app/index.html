@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+    <!-- jQuery UI !-->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+<!-- jQuery UI !-->
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+
+</head>
+<body>
+    <div class="container">
+    
+    <nav class="navbar navbar-light">
+
+        <a class="navbar-brand" href="/">Travel Itineraries</a>
+    
+        <ul class="nav justify-content-end">
+
+            {% if not 'user_id' in request.session %}
+            <li class="nav-item">
+                    <a class="nav-link" href="/login_reg">Login</a>
+                </li>
+            {% endif %}
+
+            <li class="nav-item">
+                <a class="nav-link" href="/my_trips">My Trips</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/saved_itineraries">Saved Itineraries</a>
+            </li>
+            {% if 'user_id' in request.session %}
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            {% endif %}
+        </ul> 
+    </nav> 
+    
+
+
+    <div class="jumbotron">
+        <h1 class="display-4">Hello, {{user.first_name}}</h1>
+        <p class="lead">Search from itineraries submitted by users across the globe. Save your favorites to your Travel Board for tips and inspiration.</p>
+        <hr class="my-4">
+        <p>Where do you want to go?</p>
+        <form action="places_find" method="post" id="ajax_form">
+            {% csrf_token%}
+
+        <input type = "text" class="form-control" name = "search" id="search" placeholder="ie. Tokyo, Barcelona, Helsinki...">
+        
+        </form>
+        <div id="random"></div>
+
+    </div>
+    <hr class="my-4">
+
+    <div class="container" id="add">
+        <h1 class="display-4">Add a New Itinerary</h1>
+
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      
+        {% endfor %}
+        </ul>
+        {% endif %}
+
+        <p class="lead">Upload a new itinerary from a trip you already took! Share with others to inspire their future travels.</p>
+            <br>
+        <form action="/add_process" method="POST">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label for="title" class="col-sm-2 col-form-label">Title:</label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" name="title" placeholder="ie. How to spend one week in Tokyo">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="city" class="col-sm-2 col-form-label">City:</label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" name="city_name" placeholder="ie. Tokyo">
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label for="country" class="col-sm-2 col-form-label">Country:</label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" name="country_name" placeholder="ie. Japan">
+                </div>
+            </div>
+       
+            <div class="form-group row">
+                <label for="description" class="col-sm-2 col-form-label">Description:</label>
+                <div class="col-sm-10">
+                <textarea class="form-control" name="description" placeholder="ie. Pro Tip: Get to the Fish Market early to avoid lines!"></textarea>
+                <small id="passwordHelpBlock" class="form-text text-muted">
+                        Tell us what you did, what you enjoyed at this location or place of interest, or share any tips or insights you have!
+                        </small>
+                </div>
+            </div>
+            
+            
+            <div class="form-group row">
+                <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+            </form>
+
+
+    </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
+
+<script>
+    
+    $('#search').keyup(function(){
+        $.ajax({
+            url: '/find_places',
+            method:'post',
+            data: $('#ajax_form').serialize(),
+            success: function(response){
+                console.log(response);
+                $('#random').html(response)
+           
+
+                }
+        })
+        });
+      
+
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
