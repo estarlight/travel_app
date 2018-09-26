@@ -170,7 +170,10 @@ def view_trip(request, t_id):
         messages.error(request, 'This trip does not exist')
         return redirect ('my_trips')
 
-    user = User.objects.get(id=request.session['user_id'])
+    if 'user_id' in request.session:
+        user = User.objects.get(id=request.session['user_id'])
+    else: 
+        user = None
 
     context = {
         "trip": trip
